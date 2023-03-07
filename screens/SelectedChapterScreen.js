@@ -1,7 +1,7 @@
 import { TouchableOpacity, KeyboardAvoidingView, StyleSheet, Text, TextInput, View, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Card from '../Components/Card'
-import { collection, query, doc, where, getDocs, setDoc, addDoc } from 'firebase/firestore';
+import { collection, query, doc, where, getDocs, addDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 const SelectedChapterScreen = ({ route, navigation }) => {
@@ -64,7 +64,6 @@ const SelectedChapterScreen = ({ route, navigation }) => {
     } catch (error) {
       console.log("Error updating document: ", error);
     }
-
     // navigate away
     // send prop up saying completed chapter.
   }
@@ -88,9 +87,6 @@ const SelectedChapterScreen = ({ route, navigation }) => {
   );
 
     return (
-      <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding">
         <View style={styles.container}>
           {chapterImage ? console.log(chapterImage.url) : undefined}
         {chapterImage ? <Image 
@@ -100,9 +96,8 @@ const SelectedChapterScreen = ({ route, navigation }) => {
             <Text style={styles.cardContentChapter}>{content.content[0].value}</Text> )}
             </Card>
             {chapterInput == "true" ? renderInput() : undefined}
+            {chapterInput == "true" ? renderButton() : undefined}
         </View> 
-        {chapterInput == "true" ? renderButton() : undefined}
-        </KeyboardAvoidingView>
     )
 }
 
@@ -110,15 +105,17 @@ export default SelectedChapterScreen;
 
 const styles = StyleSheet.create({
 
+
   image: {
-    width: '100%',
-    height: '50%',
+    width: '50%',
+    height: '25%',
   },
 
   container: {
     flex: 1,
     backgroundColor: '#BFD7E3',
     alignItems: 'center',
+    height: '100%'
   },
 
   input: {
@@ -126,9 +123,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    marginBottom: 5,
+    marginTop: 40,
+    marginBottom: 15,
     position: 'absolute',
-    bottom: 0,
+    bottom: 130,
     width: '50%',
     textAlignVertical: 'bottom'
 },
@@ -136,15 +134,16 @@ const styles = StyleSheet.create({
     cardContent: {
       flexGrow: 1,
       alignItems: 'center',
+      textAlign: 'center',
       marginLeft: 35,
       marginTop: 25,
-      width: '100%',
       color: 'white',
       fontWeight: 'bold',
     },
 
     cardContentChapter: {
         alignItems: 'center',
+        textAlign: 'center',
         marginLeft: 25,
         marginRight: 25,
         marginTop: 10,
@@ -165,14 +164,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10,
         marginBottom: 10,
+        position: 'absolute',
+        bottom: 15,
         height: '20%',
-
     },
 
     button: {
         backgroundColor: '#1976d2',
-        width: '100%',
-        padding: 15,
+        width: '60%',
+        padding: 7,
+        marginTop: 15,
         borderRadius: 10,
         alignItems: 'center',
     },
